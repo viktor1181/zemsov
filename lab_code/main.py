@@ -43,9 +43,7 @@ if __name__ == "__main__":
 
     # Function for finding the paths
     path = findpaths(ring_structure, src, dst, properties.n_vertex)
-    #for i in range(2, properties.n_edge+2):
-    #    ans = DFS(properties.n_edge+1, i, src, dst)
-    #    timeFaluer.append(ans)
+
     for i in path:
         if len(i) > 2:
             for j in range(len(i)-1):
@@ -57,6 +55,9 @@ if __name__ == "__main__":
 
     for i in timeFaluer:
         for j in path:
-            pass
+            print(i)
+            if set(i) in set(j):
+                print('yes')
 
-    print(timeFaluer)
+
+    #print(timeFaluer)
