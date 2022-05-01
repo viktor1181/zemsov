@@ -1,4 +1,6 @@
 # Driver code
+import itertools
+
 from BFC import findpaths
 import properties
 from combination import comb
@@ -42,22 +44,8 @@ if __name__ == "__main__":
         src, dst))
 
     # Function for finding the paths
-    path = findpaths(ring_structure, src, dst, properties.n_vertex)
-
-    for i in path:
-        if len(i) > 2:
-            for j in range(len(i)-1):
-                arr = comb(i, j+2)
-                timeFaluer.append(arr)
-        else:
-            arr = comb(i, 1)
-            timeFaluer.append(arr)
-
-    for i in timeFaluer:
-        for j in path:
-            print(i)
-            if set(i) in set(j):
-                print('yes')
+    paths = findpaths(ring_structure, src, dst, properties.n_vertex)
 
 
-    #print(timeFaluer)
+    combination = [list(i) for i in itertools.product(*paths)]
+    print(combination)

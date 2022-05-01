@@ -8,7 +8,7 @@ def comb(arr, r):
 
 if __name__ == "__main__":
 	stuff = [1, 2, 3, 4, 5]
-	r = 3
+	r = 1
 	arr = comb(stuff, r)
 	print(arr)
 # This code is contributed
