@@ -1,12 +1,19 @@
 import properties
+from BFC import findpaths
 
 Lij = [1000] * 10
 L = {}
 bindings = {}
+sigma_svyzi = 0.2
 ring_structure = [[] for _ in range(properties.n_edge)]
 ring = [[] for _ in range(properties.n_edge+properties.n_vertex)]
 # список связей
 connections = [i+properties.n_vertex for i in range(properties.n_vertex)]
+
+# интенсивность отказа вершин и связей
+int_otk_el = [7, 2, 8, 5, 4, 11, 12, 9, 8, 3]
+
+int_otk_line = [l*sigma_svyzi for l in Lij]
 
 # Construct a graph
 ring_structure[0].append(1)
@@ -44,6 +51,19 @@ for i, el in enumerate(Lij):
     bindings[connections[i]] = ring_structure[i]
 
 if __name__ == "__main__":
+	src = 2
+	dst = 3
+	paths = findpaths(ring_structure, src, dst, properties.n_vertex)
 	print(L)
-	print("\n")
+	print("\n ring_structure ")
+	print(ring_structure)
+	print("\n bindings ")
 	print(bindings)
+	print("\n paths ")
+	print(paths)
+	for path in paths:
+		pass
+"""
+ring_structure это двумерный список (список смежноси графа) то есть ендукс это вершина,
+а значения это список вершин, которые соединены с вершиной(индексом) 
+"""

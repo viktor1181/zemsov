@@ -2,7 +2,7 @@ import itertools
 
 import properties
 from BFC import findpaths
-from structure import ring_structure
+from ringStructure import ring_structure
 
 #for L in range(0, len(stuff)+1):
 def comb(arr, r):

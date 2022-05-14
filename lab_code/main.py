@@ -4,7 +4,7 @@ import itertools
 from BFC import findpaths
 import properties
 from combination import comb
-from structure import ring_structure
+from ringStructure import ring_structure
 from timeCombination import DFS
 
 src = 2
