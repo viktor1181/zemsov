@@ -41,6 +41,7 @@ def find_index_of_diaposon(diaposon,n):
 def find_otk_elements(diaposon, paths):
     otk_elements = set()
     tmp_paths = paths.copy()
+    ksi_set = set()
     cond = set()
     for i in range(len(paths)):
         cond.add(i)
@@ -50,8 +51,11 @@ def find_otk_elements(diaposon, paths):
         ind_otk_ela = find_index_of_diaposon(diaposon,ksi)
         for el in find_index(tmp_paths, ind_otk_ela):
             set_index.add(el[0])
-            otk_elements.add(ind_otk_ela)
-    return otk_elements
+            if ind_otk_ela not in otk_elements:
+                otk_elements.add(ind_otk_ela)
+                ksi_set.add(ksi)
+
+    return ksi_set
 #def Modeling(diaposon, paths, N):
 #    # генерируем случайную величину
 #    for i in range(10000):
