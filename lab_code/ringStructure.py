@@ -6,7 +6,6 @@ L = {}
 bindings = {}
 sigma_svyzi = 0.2
 ring_structure = [[] for _ in range(properties.n_edge+properties.n_vertex)]
-ring = [[] for _ in range(properties.n_edge+properties.n_vertex)]
 # список связей
 connections = [i+properties.n_vertex for i in range(properties.n_vertex)]
 

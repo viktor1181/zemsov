@@ -1,12 +1,22 @@
+import itertools
 import random
 
+import lineStructure
 import properties
 import ringStructure
+import treeStructure
 from BFC import findpaths
 from ringStructure import int_otk_el, int_otk_line, ring_structure
+from lineStructure import int_otk_el, int_otk_line, line_structure
+from treeStructure import int_otk_el, int_otk_line, tree_structure
 import matplotlib.pyplot as plt
 
 import numpy as np
+import collections
+import math
+import operator
+import functools
+import decimal
 
 
 def Diaposon(int_otk_el, int_otk_line):
@@ -23,8 +33,11 @@ def Diaposon(int_otk_el, int_otk_line):
 
     for l in int_otk_line:
         ysl_line.append(l / treygolinik)
-    ysl_all.extend(ysl_el)
-    ysl_all.extend(ysl_line)
+    for el, line in zip(ysl_el, ysl_line):
+        ysl_all.append(el)
+        ysl_all.append(line)
+    #ysl_all.extend(ysl_el)
+    #ysl_all.extend(ysl_line)
     #определим интервал пропорциональный его интенсивности отказа всех элементов сети
     diaposon = [0]
     for i,ysl in enumerate(ysl_all):
@@ -62,8 +75,25 @@ def find_otk_elements(diaposon, paths):
 def time_from_ksi(ksi, method=0, intensivnost=[], otk_el=[]):
     time = []
     for count,i in enumerate(ksi):
-        time.append(-1/intensivnost[otk_el[count]] * np.log(i))
+        time.append(-1/intensivnost[otk_el[count]] * np.log(i)*1000000)
     return sum(time)
+def P(t, paths, intensiv):
+    P_C = 1
+    p_lam = 1
+    p = []
+    k = dict()
+    no_of_lists_per_name = collections.Counter(itertools.chain.from_iterable(map(set, paths)))
+
+    for name, no_of_lists in no_of_lists_per_name.most_common():
+        k[name] = no_of_lists
+    for path in paths:
+        for el in path:
+            p_lam *= math.pow(math.e, intensiv[el]*t/(k[el]*1000000))
+        p.append(1 - p_lam)
+
+        mul = functools.reduce(operator.mul, p)
+    P_C = 1 - mul
+    return P_C
 #def Modeling(diaposon, paths, N):
 #    # генерируем случайную величину
 #    for i in range(10000):
@@ -78,13 +108,16 @@ if __name__ == "__main__":
     all_intensiv=[]
     gistagramma = list()
     otk_elem_failure = list()
-    diaposon = Diaposon(int_otk_el, int_otk_line)
-    all_intensiv.extend(ringStructure.int_otk_el)
-    all_intensiv.extend(ringStructure.int_otk_line)
+    diaposon = Diaposon(treeStructure.int_otk_el, treeStructure.int_otk_line)
+    for el, line in zip(treeStructure.int_otk_el, treeStructure.int_otk_line):
+        all_intensiv.append(el)
+        all_intensiv.append(line)
+    #all_intensiv.extend(ringStructure.int_otk_el)
+    #all_intensiv.extend(ringStructure.int_otk_line)
     src = 2
-    dst = 19
+    dst = 4
     N = 10000
-    paths = findpaths(ring_structure, src, dst, properties.n_vertex)
+    paths = findpaths(tree_structure, src, dst, properties.n_vertex)
     for i in range(N):
         (ksi,otk_elements) = find_otk_elements(diaposon, paths)
         time_otkaza = time_from_ksi(ksi=ksi, intensivnost=all_intensiv, otk_el=otk_elements)
@@ -96,15 +129,25 @@ if __name__ == "__main__":
     sred_narabotka_na_otkaz = sum(gistagramma)/len(gistagramma)
     min_time = min(gistagramma)
     max_time = max(gistagramma)
+    print(paths)
     print(P_SYS)
     print(sred_narabotka_na_otkaz)
     print(min_time)
     print(max_time)
-    gistagramma = [int(i*1000) for i in gistagramma]
+    #gistagramma = [int(i*1000) for i in gistagramma]
     #print(gistagramma)
     # выведим гистограмму времен отказов сети связи
-    n, bin, patches = plt.hist(gistagramma, bins=100)
+    P_CH = []
+    tim = []
+    for t in range(700):
+        tim.append(t)
+        P_CH.append(P(t,paths,all_intensiv))
+    plt.figure(1)
+    plt.plot(tim, P_CH)
+    plt.figure(2)
+    plt.hist(gistagramma, bins=100)
     plt.show()
+
     #print(ysl_el)
     #print("\n")
     #print(ysl_line)
