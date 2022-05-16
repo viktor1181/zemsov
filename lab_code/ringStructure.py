@@ -5,7 +5,7 @@ Lij = [1000] * 10
 L = {}
 bindings = {}
 sigma_svyzi = 0.2
-ring_structure = [[] for _ in range(properties.n_edge)]
+ring_structure = [[] for _ in range(properties.n_edge+properties.n_vertex)]
 ring = [[] for _ in range(properties.n_edge+properties.n_vertex)]
 # список связей
 connections = [i+properties.n_vertex for i in range(properties.n_vertex)]
@@ -17,7 +17,7 @@ int_otk_line = [l*sigma_svyzi for l in Lij]
 
 # Construct a graph
 ring_structure[0].append(1)
-ring_structure[0].append(9)
+ring_structure[0].append(19)
 ring_structure[1].append(0)
 ring_structure[1].append(2)
 ring_structure[2].append(1)
@@ -35,7 +35,27 @@ ring_structure[7].append(8)
 ring_structure[8].append(7)
 ring_structure[8].append(9)
 ring_structure[9].append(8)
-ring_structure[9].append(1)
+ring_structure[9].append(10)
+ring_structure[10].append(9)
+ring_structure[10].append(11)
+ring_structure[11].append(10)
+ring_structure[11].append(12)
+ring_structure[12].append(11)
+ring_structure[12].append(13)
+ring_structure[13].append(12)
+ring_structure[13].append(14)
+ring_structure[14].append(13)
+ring_structure[14].append(15)
+ring_structure[15].append(14)
+ring_structure[15].append(16)
+ring_structure[16].append(15)
+ring_structure[16].append(17)
+ring_structure[17].append(16)
+ring_structure[17].append(18)
+ring_structure[18].append(17)
+ring_structure[18].append(19)
+ring_structure[19].append(18)
+ring_structure[19].append(0)
 # добавлениеновых путей
 #ring_structure[0].append(3)
 #ring_structure[2].append(8)
