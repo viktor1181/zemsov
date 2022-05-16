@@ -88,7 +88,7 @@ def P(t, paths, intensiv):
         k[name] = no_of_lists
     for path in paths:
         for el in path:
-            p_lam *= math.pow(math.e, intensiv[el]*t/(k[el]*1000000))
+            p_lam *= math.pow(math.e, -intensiv[el]*t/(k[el]*1000000))
         p.append(1 - p_lam)
 
         mul = functools.reduce(operator.mul, p)
@@ -108,8 +108,8 @@ if __name__ == "__main__":
     all_intensiv=[]
     gistagramma = list()
     otk_elem_failure = list()
-    diaposon = Diaposon(treeStructure.int_otk_el, treeStructure.int_otk_line)
-    for el, line in zip(treeStructure.int_otk_el, treeStructure.int_otk_line):
+    diaposon = Diaposon(ringStructure.int_otk_el, ringStructure.int_otk_line)
+    for el, line in zip(ringStructure.int_otk_el, ringStructure.int_otk_line):
         all_intensiv.append(el)
         all_intensiv.append(line)
     #all_intensiv.extend(ringStructure.int_otk_el)
@@ -117,7 +117,7 @@ if __name__ == "__main__":
     src = 2
     dst = 4
     N = 10000
-    paths = findpaths(tree_structure, src, dst, properties.n_vertex)
+    paths = findpaths(ring_structure, src, dst, properties.n_vertex)
     for i in range(N):
         (ksi,otk_elements) = find_otk_elements(diaposon, paths)
         time_otkaza = time_from_ksi(ksi=ksi, intensivnost=all_intensiv, otk_el=otk_elements)
@@ -139,7 +139,7 @@ if __name__ == "__main__":
     # выведим гистограмму времен отказов сети связи
     P_CH = []
     tim = []
-    for t in range(700):
+    for t in range(20000):
         tim.append(t)
         P_CH.append(P(t,paths,all_intensiv))
     plt.figure(1)
