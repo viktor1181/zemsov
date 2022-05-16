@@ -100,6 +100,9 @@ def P(t, paths, intensiv):
 #        ksi = random.uniform(0,1)
 #
 #    return ksi
+"""
+ВНИМАНИЕ ПРОЧИТАЙТЕ ЭТУ ХУЙНЮ ДО КОНЦА ФАЙЛА ЧТОБЫ УПРАВЛЯТЬ ЭТОЙ ОБОСАННОЙ ПРОГОЙ
+"""
 if __name__ == "__main__":
     P_SYS = 0
     min_time = 0
@@ -108,15 +111,35 @@ if __name__ == "__main__":
     all_intensiv=[]
     gistagramma = list()
     otk_elem_failure = list()
+    """
+    ВНИЗУ ЕСТЬ ТАКАЯ ПИЗДЮШНИЦА ringStructure ОНА ОЗНАЧАЕТ ЧТО МОДЕЛИРУЕТСЯ КОЛЬЦЕВАЯ СТРУКТУРА
+    lineStructure И treeStructure ОТВЕЧАЮТ ЗА ЛИНЕЙНУЮ И ДРЕВОВИДНУЮ СТРУКТУРЫ 
+    ТО ЕСТЬ ЕСЛИ ХОТИТ РАЗЕБАТЬ НАПРИМЕР ДРЕВОВИДНУЮ СТРУКТУРУ 
+    ВМЕСТО ringStructure ПИЗДАНИТЕ treeStructure
+    """
     diaposon = Diaposon(ringStructure.int_otk_el, ringStructure.int_otk_line)
     for el, line in zip(ringStructure.int_otk_el, ringStructure.int_otk_line):
         all_intensiv.append(el)
         all_intensiv.append(line)
     #all_intensiv.extend(ringStructure.int_otk_el)
     #all_intensiv.extend(ringStructure.int_otk_line)
+    """
+    ВОТ ЭТИ СРАНЫЕ ПЕРЕМЕННЫЕ ОТВЕЧАЮТ ЗА НАЧАЛЬНУЮ И КОНЕЧНУЮ ТОЧКИ ДЛЯ ОБХОДА ГРАФА 
+    МЕНЯЮ ИХ ЧТОБЫ ИССЛЕДОВАТЬ ВЕСЬ ГРАФ, НА КОТОРЫЙ Я СУ КАЖДЫЙ ДЕНЬ
+    """
     src = 2
     dst = 4
     N = 10000
+    """
+    ВОТ ЭТА ПАРАША ВНИЗУ ОТВЕЧАЕТ ЗА ПОИСК ПУТЕЙ ОТ ТОЧКИ src ДО dst
+    А ТА ПЕРЕМЕННАЯ КОТОРАЯ ОБМАЗАНО ГОВНОМ N  ОТВЕЧАЕТ ЗА КОЛИЧЕСТВО ЦИКЛОВ МОДЕЛИРОВАНИЯ
+    РАЗЪЕБИТЕ ЭТО ЧИСЛО ДЛЯ ПОЛУЧЕНИЯ РАЗНЫХ РЕЗУЛЬТАТОВ 
+    КСТАТИ ЗДЕСЬ ЕЩЕ ЕСТЬ ЭТА ПИЗДА ring_structure ЕСЛИ ХОТИТЕ 
+    ДРЕВОВИДНУЮ СТРУКТУРУ С НОГ ДО ГОЛОВЫ ОТМАТЕРИТЬ ВЪЕБИТЕ tree_structure 
+    ИЛИ line_structure ДЛЯ ЛИНЕЙНОЙ ПАРАШЫ
+    
+    """
+
     paths = findpaths(ring_structure, src, dst, properties.n_vertex)
     for i in range(N):
         (ksi,otk_elements) = find_otk_elements(diaposon, paths)
